@@ -1,7 +1,3 @@
-from typing import Final
-
-ID_LENGTH: int = 160
-
 class KadId:
     @staticmethod
     def distance(lhs_id, rhs_id):
@@ -29,9 +25,5 @@ class KadId:
     @staticmethod
     def __validate_id(id: int):
         assert id != None and id < 2**160, 'Invalid id'
-
-    @staticmethod
-    def __validate_index(index: int):
-        assert index != None and 0 <= index and index < ID_LENGTH, (
-                'Invalid index')  
+ 
 
