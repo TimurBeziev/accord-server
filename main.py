@@ -11,19 +11,16 @@ def main():
     person = peer.Peer(ip_address=ip_address, port=port, username=username)
     wait_for_inc_conn_th = threading.Thread(target=person.wait_for_incoming_connections, args=())
     wait_for_inc_conn_th.start()
-
     print("---------------------------------------------")
     print("Add your friend")
-    oppenent_ip = ip_address
-    oppenent_port: int = int(input("Enter friends port: "))
-    usr: tuple = (oppenent_ip, oppenent_port)
-
+    opponent_ip = ip_address
+    opponent_port: int = int(input("Enter friends port: "))
+    usr: tuple = (opponent_ip, opponent_port)
+    print("----------------------------------------------")
     create_chat_room_th = threading.Thread(target=person.create_chat_room, args=([usr],))
-
     create_chat_room_th.start()
-
-    wait_for_inc_conn_th.join()
     create_chat_room_th.join()
+    wait_for_inc_conn_th.join()
 
 
 if __name__ == '__main__':
