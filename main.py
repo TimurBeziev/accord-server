@@ -1,12 +1,13 @@
-from core.server import AsyncTCPServer
-
 import argparse
+
+from core.server import AsyncTCPSocketServer
 
 
 def main():
     args = parse_args()
-    server = AsyncTCPServer('localhost', args.port)
+    server = AsyncTCPSocketServer('localhost', args.port)
     server.serve()
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
