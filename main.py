@@ -1,11 +1,13 @@
 import argparse
 
 from core.server import AsyncTCPSocketServer
+from core.connection_handler import UnsecureTCPConnectionHandler
 
 
 def main():
     args = parse_args()
-    server = AsyncTCPSocketServer('localhost', args.port)
+    server = AsyncTCPSocketServer('localhost', args.port,
+                                  UnsecureTCPConnectionHandler)
     server.serve()
 
 
