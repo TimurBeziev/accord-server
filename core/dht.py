@@ -16,6 +16,9 @@ class DHT:
         if user_id in self.table:
             self.table.pop(user_id)
 
+    def get_user(self, user_id: int):
+        return self.table[user_id]
+
     def get_all_users_dict(self):
         return self.table
 

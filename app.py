@@ -1,8 +1,9 @@
 from flask      import Flask
 from core.dht   import DHT
 from core.user  import User
-from core.communication import AccordBP
+from core.storage import Storage
 from core.encoder import AccordJsonEncoder as encoder
+from core.communication import AccordBP
 
 import argparse
 import random
@@ -21,12 +22,12 @@ def parse_args():
 
 def main():
     args = parse_args()
-    dht = DHT(User(
-        user_address=('localhost', args.port),
-        user_name=args.username,
-        user_id=random.getrandbits(160)
-        ))
-    app.register_blueprint(AccordBP(dht).get_bp())
+    user = User(user_address=('localhost', args.port),
+                user_name=args.username,
+                user_id=random.getrandbits(160))
+    dht = DHT(user)
+    storage = Storage()
+    app.register_blueprint(AccordBP(dht, user, storage).get_bp())
     app.run(host='localhost', port=args.port)
 
 
