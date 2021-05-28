@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename= 'css/style.css') }}">
+  </head>
+  <body>
+    <div class="chat">
+  <section class="sidebar">
+    <div class="user-info"><h1 align="center">Chats</h1></div>
+    <div class="users">
+    	<div class="chats">
+                {% block content %} {% endblock %}
+    	</div>
+        
+        <div class="search">
+        	<input id='find' type="text" size="30">
+    	</div>
+    	
+    </div>
+  </section>
+
+  <section class="main">
+   <div class="online-user-list">
+   	<div class="header">
+        	<h1 align="center"> User </h1> 
+        </div>
+   		
+	<div align="right">
+            <button id='button2' onclick=''> 11 </button>
+            <button id='button2' onclick=''> 22 </button>
+  	</div>
+   </div>
+    <div class="message-list" id="text">
+        {% block messages %} {% endblock %}
+    	
+    </div>
+        {% block send %} {% endblock %}
+  </section>
+</div>
+</body>
+</html>

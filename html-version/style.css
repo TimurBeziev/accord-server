@@ -1,0 +1,159 @@
+body{
+    background-color: #68615d;
+}
+html {
+  font-family: "Lucida Sans", sans-serif;
+}
+
+.chat {
+  display: flex;
+
+  flex-direction: row;
+
+  height: 97vh;
+}
+
+.sidebar {
+
+  display: flex;
+  flex-direction: column; 
+  flex: 1 0 10em; 
+  
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 10 0 10em;  
+}
+
+.online-user-list {
+  flex:1;
+  background-color: #ce5e48;
+  max-height:70px;
+  margin-left:1px;
+  color: #ffffff;
+  position: relative;
+  display: flex;
+}
+
+.header {
+  flex: 1 0 10em; 
+}
+
+.message-list {
+  flex:1;
+  background-color:#ece5e1;
+  margin-left:1px;
+  overflow-y: scroll;
+}
+
+.message-form {
+  flex:1;
+  max-height:30px;
+  background-color:#ece5e1;
+  margin-left:1px;
+  display: flex;
+}
+
+.user-info {
+    flex:1;
+    max-height:70px;
+    background-color: #ce5e48;
+    color: #ffffff;
+}
+
+.users {
+  display: flex;
+  flex-direction: column; 
+  flex: 1 0 10em; 
+}
+
+.chats {
+  flex:1;
+  background-color: #ffffff;
+  overflow-y: scroll;
+}
+
+.search {
+  flex:1;
+  background-color: #ffffff;
+  max-height:30px;
+  display: flex;
+}
+
+#button2{
+    background-color: #C66E4E;
+    padding: 10px;
+    border-radius: 31%;
+    padding-right: 10px;
+    padding-left:10px;
+    margin-right:5px;
+    margin-top:5px;
+}
+
+#input{
+    background-color: #b7b1ac;
+    margin-right: 5px;
+    flex: 1 0 10em;
+}
+
+#send{
+    background-color: #C66E4E;
+    padding: 4px;
+    margin-right:15px;
+    border-radius: 31%;
+    padding-right: 10px;
+    padding-left:10px;
+}
+
+#send:hover {
+    background-color: #B94700;
+}
+
+#find{
+    background-color: #ffffff;
+    margin-right: 15px;
+    flex: 1;
+}
+
+.menu-container {
+  padding: 8px;
+  background-color: #b7b1ac;
+  color: #ffffff;
+  box-shadow: 0 1px 3px #68615d, 0 1px 2px #68615d;
+  margin-top:5px;
+}
+
+.menu-container:hover {
+  background-color: #B59B7C;
+}
+
+.container {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px 0;
+}
+
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+.time-left {
+  float: left;
+  color: #999;
+}
