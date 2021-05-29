@@ -1,36 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="menu-container"> Chat1 </div>
-    <div class="menu-container"> Chat2 </div>
-    <div class="menu-container"> Chat3 </div>
-    <div class="menu-container"> Chat4 </div>
+<div class="menu-container"> Chat1</div>
+<div class="menu-container"> Chat2</div>
+<div class="menu-container"> Chat3</div>
+<div class="menu-container"> Chat4</div>
 {% endblock %}
 
-{% block messages %} 
+{% block messages %}
 
-<div name="textarea" id="textarea" style="margin-left: 35px; font-size:150%;"> </div>
+<div name="textarea" id="textarea" style="margin-left: 35px; font-size:150%;"></div>
 
-<script> 
+<script>
     let val = document.getElementById("textarea").value
-
+    console.log(val)
     let text = "{{message}}"
-    if(text)  {
-        document.getElementById("textarea").innerHTML += '<div class="container">' 
-+ "{{message}}" + '<span class="time-right">' + new Date().toLocaleTimeString().slice(0,5) + '</span></div>'
+    if (text) {
+        document.getElementById("textarea").innerHTML += '<div class="container">'
+            + "{{message}}" + '<span class="time-right">' + new Date().toLocaleTimeString().slice(0, 5) + '</span></div>'
         var element = document.getElementById("text");
-        element.scrollTop = element.scrollHeight - element.clientHeight;  
+        element.scrollTop = element.scrollHeight - element.clientHeight;
     }
 
 </script>
 
 {% endblock %}
 
-{% block send %} 
+{% block send %}
 <form method="post">
-  <div class="message-form">
-    <input name="data" id='input' type="text" size="60"></input>
-    <button id='send'>>></button>
-  </div>
+    <div class="message-form">
+        <input name="data" id='input' type="text" size="60"></input>
+        <button id='send'>>></button>
+    </div>
 </form>
 {% endblock %}
