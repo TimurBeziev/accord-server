@@ -24,4 +24,3 @@ class DHT:
 
     def serialize(self):
         return json.dumps([user.serialize() for user in self.table.values()])
-

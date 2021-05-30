@@ -4,6 +4,7 @@ from core.user import User
 from core.storage import Storage
 from core.encoder import AccordJsonEncoder as encoder
 from core.communication import AccordBP
+import socket
 
 import argparse
 import random
@@ -19,31 +20,12 @@ def parse_args():
     return parser.parse_args()
 
 
-@app.route('/', methods=('GET', 'POST'))
-def home():
-    data = ""
-    if request.method == 'POST':
-        data += request.form['data']
-    return render_template("app.html")
-
-
-@app.route('/postmethod', methods=['POST'])
-def get_post_data():
-    data = request.form['data']
-    return data
-
-
-@app.route('/getmessage')
-def get_python_data():
-    return request.form['data']
-
-
-# метод который шлет запрос по нужному айпи айди
 def main():
     args = parse_args()
     user = User(user_address=('localhost', args.port),
                 user_name=args.username,
                 user_id=random.getrandbits(160))
+
     dht = DHT(user)
     storage = Storage()
     app.register_blueprint(AccordBP(dht, user, storage).get_bp())
