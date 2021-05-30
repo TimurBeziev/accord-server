@@ -1,3 +1,5 @@
+import json
+
 import requests
 from flask import Blueprint, request, make_response, render_template, redirect
 from flask.json import jsonify
@@ -22,28 +24,26 @@ class AccordBP:
         @self.accord.get('/new_chat')
         def ui_create_new_1v1_chat():
             """ This method creates new 1v1 Chat class
-            It receives 3 parameters such as chat_id,
-            chat_name and user_id
+            It receives 3 parameters such as chat_id, chat_name and user_port
             """
-            # chat_id = request.args.get('chat_id', type=int)
-            # chat_name = request.args.get('chat_name', type=str)
-            # port = request.args.get('port', type=int)
-            # user = request.args.get('user_id', type=int)
-            response = requests.get('http://localhost:8081/node/join_network')
-            print(response.json())
-            # port = response.json()
-            # print(port)
+            chat_id = request.args.get('chat_id', type=str)
+            chat_name = request.args.get('chat_name', type=str)
+            # user_ip = request.args.get('user_ip', type=int)
+            user_port = request.args.get('user_port', type=int)
+            link = 'http://localhost' + ':' + str(user_port) + '/node/join_network'
+            response = requests.get(link)
             if response:
-                print('Success!')
-                # print(response.json())
-                # user = User(user_address=('localhost', response["port"]),
-                #             user_name=args.username,
-                #             user_id=random.getrandbits(160))
+                peer_info = json.loads(response.text)[1:-1]
+                peer_info = json.loads(peer_info)
+                peer = User(user_address=('localhost', peer_info["port"]),
+                            user_name=peer_info["name"],
+                            user_id=peer_info["id"])
+                self.dht.add_user(peer)
+
+                chat1: Chat = Chat(chat_id, chat_name, peer, user_port)
+                storage.add_chat(chat1)
             else:
                 print('An error has occurred.')
-            # dht.add_user(user)
-            # chat1: Chat = Chat(chat_id, chat_name, user, port)
-            # storage.add_chat(chat1)
             return redirect("/")
 
         @self.accord.route('/', methods=('GET', 'POST'))

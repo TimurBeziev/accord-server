@@ -1,10 +1,9 @@
-from flask import Flask, request, render_template, url_for
+from flask import Flask
 from core.dht import DHT
 from core.user import User
 from core.storage import Storage
 from core.encoder import AccordJsonEncoder as encoder
 from core.communication import AccordBP
-import socket
 
 import argparse
 import random
