@@ -71,14 +71,14 @@ class AccordBP:
         @self.accord.get('/ui/write_message')
         def ui_write_message():
             """ This method sends a new message to a specified chat on another node.
-            It receives 4 parameters chat_id, data, timestamp, port
+            It receives 3 parameters chat_id, data, timestamp
             """
             data = request.args.get('data', type=str)
-            port = request.args.get('port', type=int)
             chat_id = request.args.get('chat_id', type=int)
             timestamp = request.args.get('timestamp', type=int)
 
             chat = self.storage.get_chat_by_id(chat_id)
+            port = chat.get_user().get_port()
             msg = Message(self.user, data, timestamp)
             chat.add_message(msg)
             # TODO correctly process bad request
