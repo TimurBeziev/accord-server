@@ -34,6 +34,9 @@ class Chat:
         self.messages.append(message)
         self.messages.sort(key=lambda x: x.timestamp)
 
+    def get_messages(self):
+        return self.messages
+
     def get_user(self):
         return self.user
 
@@ -60,6 +63,9 @@ class Storage:
             if chat.id is chat_id:
                 return chat
         return None
+
+    def get_chat_messages(self, chat: Chat):
+        return chat.get_messages()
 
     def get_chat_port(self):
         list_of_peers_ports: List = list(self.chats.values())
