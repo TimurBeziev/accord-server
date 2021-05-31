@@ -1,36 +1,34 @@
 {% extends 'base.html' %}
 
+
+
 {% block content %}
-<div class="menu-container"> Chat1</div>
-<div class="menu-container"> Chat2</div>
-<div class="menu-container"> Chat3</div>
-<div class="menu-container"> Chat4</div>
+<div id="some_menu">
+</div>
 {% endblock %}
 
-{% block messages %}
+{% block buttons %} 
+<button id='button2' onclick='addChat()'> + </button>
+<button id='button2' onclick='connect()'> connect </button>
+{% endblock %}
 
-<div name="textarea" id="textarea" style="margin-left: 35px; font-size:150%;"></div>
 
-<script>
-    let val = document.getElementById("textarea").value
-    console.log(val)
-    let text = "{{message}}"
-    if (text) {
-        document.getElementById("textarea").innerHTML += '<div class="container">'
-            + "{{message}}" + '<span class="time-right">' + new Date().toLocaleTimeString().slice(0, 5) + '</span></div>'
-        var element = document.getElementById("text");
-        element.scrollTop = element.scrollHeight - element.clientHeight;
-    }
+{% block messages %} 
 
-</script>
+  <div name="textarea" id="textarea" style="margin-left: 35px; font-size:150%;"> 
+  </div>
+
 
 {% endblock %}
 
-{% block send %}
-<form method="post">
-    <div class="message-form">
-        <input name="data" id='input' type="text" size="60"></input>
-        <button id='send'>>></button>
-    </div>
-</form>
+
+{% block send %} 
+
+
+<script type="text/javascript" src="static/index.js"></script>
+<div class="message-form">
+  <input name="data" id='input' type="text" size="60"></input>
+  <button id='send' onclick='get()'>>></button>
+ </div>
+
 {% endblock %}

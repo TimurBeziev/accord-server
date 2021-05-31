@@ -81,7 +81,7 @@ if __name__ == '__main__':
     # print(json.dumps(msg2.serialize()))
     # --------------------------------------------------
     # user1 = User(('localhost', 8085), 'Alex', 12)
-    # self_user = User(('localhost', 8086), 'Bob', 22)
+    # self_user = User(('localhost' , 8086), 'Bob', 22)
     # chat = Chat(1, 'chat1', user1)
     # msg1 = Message(user1, 'Hello, Bob!', 123)
     # msg2 = Message(self_user, 'Hello, Alex!', 1234)
