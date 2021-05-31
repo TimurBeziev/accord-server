@@ -1,4 +1,5 @@
 import json
+from typing import List
 
 import requests
 from flask import Blueprint, request, make_response, render_template, redirect
@@ -47,6 +48,17 @@ class AccordBP:
             msg = Message(self.user, data, timestamp)
             chat.add_message(msg)
             # TODO send request to localhost:port/node/write_message
+
+        @self.accord.post('/ui/get_available_users')
+        def ui_get_available_users():
+            # returns dict (user_id, user)
+            dht_users = self.dht.get_all_users_dict
+            existing_users = []
+
+            storage_chats: List[Chat] = storage.get_all_chats()
+            for chat in range(len(storage_chats)):
+                existing_users.append(storage_chats[chat].get_user())
+            return dht_users - existing_users
 
         @self.accord.get('/new_chat')
         def ui_create_new_1v1_chat():

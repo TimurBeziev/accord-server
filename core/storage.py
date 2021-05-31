@@ -34,6 +34,9 @@ class Chat:
         self.messages.append(message)
         self.messages.sort(key=lambda x: x.timestamp)
 
+    def get_user(self):
+        return self.user
+
     def serialize(self):
         return {
             'id': self.id,
@@ -48,6 +51,9 @@ class Storage:
 
     def add_chat(self, chat: Chat):
         self.chats[chat.id] = chat
+
+    def get_all_chats(self):
+        return self.chats.values()
 
     def get_chat_by_id(self, chat_id):
         for chat in self.chats:
