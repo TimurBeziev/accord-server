@@ -83,7 +83,20 @@ class AccordBP:
             chat.add_message(msg)
             # TODO correctly process bad request
             requests.get(url=f'http://localhost:{port}/node/write_message',
-                         params={'chat_id': chat_id, 'data': json.loads(msg.serialize())})  # !!! serialize
+                         params={'chat_id': chat_id, 'data': json.loads(msg.serialize())})
+
+        @self.accord.get('/ui/create_chat_with_user')
+        def ui_create_chat_with_user():
+            """This method created new chat with user
+            It receives the user_id, chat_id
+            """
+            user_id = request.args.get('user_id', type=int)
+            chat_id = request.args.get('chat_id', type=int)
+            user = self.dht.get_user(user_id)
+            chat = Chat(chat_id, user.name, user)
+            self.storage.add_chat(chat)
+            # TODO correctly process bad request
+            return "ok"
 
         @self.accord.get('/ui/get_available_users')
         def ui_get_available_users():
@@ -98,30 +111,9 @@ class AccordBP:
             difference = set(dht_users) - set(existing_users)
             return jsonify(list(difference))
 
-        @self.accord.get('/new_chat')
-        def ui_create_new_1v1_chat():
-            """ This method creates new 1v1 Chat class.
-            It receives 3 parameters such as chat_id, chat_name and user_port.
-            """
-            chat_id = request.args.get('chat_id', type=str)
-            chat_name = request.args.get('chat_name', type=str)
-            # user_ip = request.args.get('user_ip', type=int)
-            user_port = request.args.get('user_port', type=int)
-            link = 'http://localhost' + ':' + str(user_port) + '/node/join_network'
-            response = requests.get(link)
-            if response:
-                peer_info = json.loads(response.text)[1:-1]
-                peer_info = json.loads(peer_info)
-                peer = User(user_address=('localhost', peer_info["port"]),
-                            user_name=peer_info["name"],
-                            user_id=peer_info["id"])
-                self.dht.add_user(peer)
-
-                chat1: Chat = Chat(chat_id, chat_name, peer, user_port)
-                storage.add_chat(chat1)
-            else:
-                print('An error has occurred.')
-            return redirect("/")
+        @self.accord.get('/ui/choose_user')
+        def ui_choose_user():
+            return render_template("choose_user.html")
 
         @self.accord.get('/check_for_new_chats')
         def check_for_new_messages():
