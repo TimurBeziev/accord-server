@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename= 'static/css/style.css') }}">
+  </head>
+  <body>
+    <div class="chat">
+  <section class="sidebar">
+    <div class="user-info"><h1 align="center">Users</h1></div>
+    <div class="users">
+    	<div class="chats">
+         {% block users %}
+         {% endblock %}
+    	</div>
+
+    </div>
+  </section>
+        <section class="main">
+  </section>
+</div>
+</body>
+</html>

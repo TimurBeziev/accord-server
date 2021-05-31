@@ -17,14 +17,7 @@ async function joinNetwork() {
 }
 
 function createChat() {
-    fetch(`http://localhost:${location.port}/ui/get_available_users`)
-        .then((response) => {
-            return response.json()
-        })
-        .then((data) => {
-            // window.location.replace('/ui/choose_user')
-            console.log(data)
-        })
+    window.location.replace('/ui/choose_user')
 }
 
 async function createChatWithUser(user_id) {
