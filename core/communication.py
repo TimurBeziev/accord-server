@@ -32,6 +32,12 @@ class AccordBP:
 
             message = Message.deserialize(data)
             chat = self.storage.get_chat_by_id(chat_id)
+            if chat is not None:
+                chat.add_message(message)
+            else:
+                # User should be in DHT
+                chat = Chat(chat_id, message.user.name, message.user)
+                self.storage.add_chat(chat)
             chat.add_message(message)
 
         @self.accord.post('/ui/write_message')
@@ -47,7 +53,9 @@ class AccordBP:
             chat = self.storage.get_chat_by_id(chat_id)
             msg = Message(self.user, data, timestamp)
             chat.add_message(msg)
-            # TODO send request to localhost:port/node/write_message
+            # TODO correctly process bad request
+            requests.post(url=f'http://localhost:{port}/node/write_message',
+                          params={'chat_id': chat_id, 'data': json.loads(msg.serialize())})  # !!! serialize
 
         @self.accord.post('/ui/get_available_users')
         def ui_get_available_users():
