@@ -1,4 +1,4 @@
-function get(){
+function get() {
     let text = document.getElementById("input").value
     document.getElementById("input").value = ""
     if(text)  {
@@ -9,16 +9,14 @@ function get(){
     }
 }
 
-async function joinNetwork(){
+async function joinNetwork() {
     const port = prompt('Введите порт');
-    console.log(`Got port ${port}`);
-    console.log(`Out port ${location.port}`);
     if (port) {
         await fetch(`http://localhost:${location.port}/ui/join_network?port=${port}`)
     }
 }
 
-function createChat(){
+function createChat() {
     fetch(`http://localhost:${location.port}/ui/get_available_users`)
         .then((response) => {
             return response.json()
@@ -27,4 +25,10 @@ function createChat(){
             // window.location.replace('/ui/choose_user')
             console.log(data)
         })
+}
+
+async function createChatWithUser(user_id) {
+    // let user_id = object.getAttribute('id')
+    let chat_id = BigInt(Math.floor(Math.random() * 1125899906842624)) // from 0 to 2**50
+    await fetch(`http://localhost:${location.port}/ui/create_chat_with_user?user_id=${user_id}&chat_id=${chat_id}`)
 }
