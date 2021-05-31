@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 
-
 {% block content %}
 <div id="some_menu">
 </div>
@@ -10,25 +9,26 @@
 {% block buttons %} 
 <button id='button2' onclick='createChat()'> + </button>
 <button id='button2' onclick='joinNetwork()'> connect </button>
-{% endblock %}
-
-
-{% block messages %} 
-
-  <div name="textarea" id="textarea" style="margin-left: 35px; font-size:150%;"> 
-  </div>
-
 
 {% endblock %}
 
 
-{% block send %} 
+{% block messages %}
+
+<div name="textarea" id="textarea" style="margin-left: 35px; font-size:150%;">
+</div>
+
+
+{% endblock %}
+
+
+{% block send %}
 
 
 <script type="text/javascript" src="templates/static/index.js"></script>
 <div class="message-form">
     <input name="data" id='input' type="text" size="60"/>
     <button id='send' onclick='get()'>>></button>
- </div>
+</div>
 
 {% endblock %}

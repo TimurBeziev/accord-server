@@ -71,7 +71,7 @@ class AccordBP:
         @self.accord.get('/ui/write_message')
         def ui_write_message():
             """ This method sends a new message to a specified chat on another node.
-            It receives 3 parameters chat_id, data, timestamp, port
+            It receives 4 parameters chat_id, data, timestamp, port
             """
             data = request.args.get('data', type=str)
             port = request.args.get('port', type=int)
@@ -115,10 +115,16 @@ class AccordBP:
         def ui_choose_user():
             return render_template("choose_user.html")
 
+        @self.accord.get('/check_for_new_chats')
+        def check_for_new_messages():
+            chats = self.storage.get_all_chats
+            if chats is None:
+                pass
+            return jsonify(chats)
+
         @self.accord.route('/', methods=('GET', 'POST'))
         def home():
             data = ""
-            storage.get_chat_port()
             if request.method == 'POST':
                 data += request.form['data']
                 print(data)
