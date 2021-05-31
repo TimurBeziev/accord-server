@@ -5,7 +5,7 @@ from flask import Blueprint, request, make_response, render_template, redirect
 from flask.json import jsonify
 from core.dht import DHT
 from core.user import User
-from core.storage import Chat, Storage
+from core.storage import Chat, Storage, Message
 
 
 class AccordBP:
@@ -16,15 +16,33 @@ class AccordBP:
         self.accord = Blueprint('accord', __name__)
 
         @self.accord.get('/node/join_network')
-        def join_network():
-            """ This method returns DHT of the node in JSON format
+        def node_join_network():
+            """ This method returns DHT of the node in JSON format.
             """
             return jsonify(self.dht)
 
+        @self.accord.post('/node/write_message')
+        def node_write_message():
+            """ This method receives a new message to a specified chat.
+            It receives 2 parameters chat_id, data
+            """
+            chat_id = request.args.get('chat_id', type=int)
+            data = request.args.get('data', type=str)
+            message = Message.deserialize(data)
+            chat = self.storage.get_chat_by_id(chat_id)
+            chat.add_message(message)
+
+        @self.accord.post('/ui/write_message')
+        def ui_write_message():
+            """ This method sends a new message to a specified chat on another node.
+            It receives 2 parameters chat_id, data
+            """
+            pass
+
         @self.accord.get('/new_chat')
         def ui_create_new_1v1_chat():
-            """ This method creates new 1v1 Chat class
-            It receives 3 parameters such as chat_id, chat_name and user_port
+            """ This method creates new 1v1 Chat class.
+            It receives 3 parameters such as chat_id, chat_name and user_port.
             """
             chat_id = request.args.get('chat_id', type=str)
             chat_name = request.args.get('chat_name', type=str)
