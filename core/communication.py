@@ -32,9 +32,7 @@ class AccordBP:
 
             message = Message.deserialize(data)
             chat = self.storage.get_chat_by_id(chat_id)
-            if chat is not None:
-                chat.add_message(message)
-            else:
+            if chat is None:
                 # User should be in DHT
                 chat = Chat(chat_id, message.user.name, message.user)
                 self.storage.add_chat(chat)
