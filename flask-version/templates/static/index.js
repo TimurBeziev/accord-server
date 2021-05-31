@@ -18,23 +18,8 @@ async function joinNetwork() {
 
 function updateChats() {
     fetch(`http://localhost:${location.port}/check_for_new_chats`)
-    // console.log("test")
 }
 
 function createChat() {
-    fetch(`http://localhost:${location.port}/ui/get_available_users`)
-        .then((response) => {
-            return response.json()
-        })
-        .then((data) => {
-            // window.location.replace('/ui/choose_user')
-            console.log(data)
-        })
-
-}
-
-async function createChatWithUser(user_id) {
-    // let user_id = object.getAttribute('id')
-    let chat_id = BigInt(Math.floor(Math.random() * 1125899906842624)) // from 0 to 2**50
-    await fetch(`http://localhost:${location.port}/ui/create_chat_with_user?user_id=${user_id}&chat_id=${chat_id}`)
+    window.location.replace('/ui/choose_user')
 }

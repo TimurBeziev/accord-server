@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base_choose_user.html' %}
 
-</body>
-</html>
+{% block users %}
+
+<div id="array_users">
+
+<script>
+    fetch(`http://localhost:${location.port}/ui/get_available_users`)
+        .then((response) => {
+            return response.json()
+        })
+        .then((data) => {
+            console.log(data)
+            for (var i = 0; i < data.length; ++i) {
+                document.getElementById("array_users").innerHTML +=
+                    `<div class="menu-container" onclick=returnSelectedUser(this) id=${data[i].id} name=${data[i].name}> ${data[i].name} </div>`
+            }
+        })
+
+    function returnSelectedUser(object) {
+        let user_id = BigInt(object.getAttribute("id"))
+        let chat_id = BigInt(Math.floor(Math.random() * 1125899906842624)) // from 0 to 2**50
+        fetch(`http://localhost:${location.port}/ui/create_chat_with_user?user_id=${user_id}&chat_id=${chat_id}`)
+        window.location.replace('/')
+    }
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
