@@ -25,5 +25,6 @@ class DHT:
     def get_all_users(self):
         return self.table.values()
 
+
     def serialize(self):
         return json.dumps([user.serialize() for user in self.table.values()])

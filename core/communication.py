@@ -40,16 +40,18 @@ class AccordBP:
             """
             pass
 
-        @self.accord.post('/ui/get_available_users')
+        @self.accord.get('/ui/get_available_users')
         def ui_get_available_users():
             # returns dict (user_id, user)
-            dht_users = self.dht.get_all_users()
+            dht_users = list(self.dht.get_all_users())
             existing_users = []
 
-            storage_chats: List[Chat] = storage.get_all_chats()
+            storage_chats: List[Chat] = list(storage.get_all_chats())
             for chat in storage_chats:
-                existing_users.append(storage_chats[chat].get_user())
-            return dht_users - existing_users
+                existing_users.append(chat.get_user())
+
+            difference = set(dht_users) - set(existing_users)
+            return jsonify(list(difference))
 
         @self.accord.get('/new_chat')
         def ui_create_new_1v1_chat():

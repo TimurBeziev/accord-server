@@ -15,6 +15,9 @@ class User:
             'name': self.name
         }
 
+    def get_username(self):
+        return self.name
+
     @staticmethod
     def load_from_dict(data: dict):
         return User((data['host'], data['port']),
