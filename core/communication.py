@@ -123,6 +123,10 @@ class AccordBP:
                 print('An error has occurred.')
             return redirect("/")
 
+        @self.accord.get('/ui/choose_user')
+        def ui_choose_user():
+            return render_template("choose_user.html")
+
         @self.accord.route('/', methods=('GET', 'POST'))
         def home():
             data = ""

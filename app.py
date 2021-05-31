@@ -23,7 +23,7 @@ def main():
     args = parse_args()
     user = User(user_address=('localhost', args.port),
                 user_name=args.username,
-                user_id=random.getrandbits(160))
+                user_id=random.getrandbits(50))  # change to 160 for unique
 
     dht = DHT(user)
     storage = Storage()

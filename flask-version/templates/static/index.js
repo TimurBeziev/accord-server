@@ -18,9 +18,13 @@ async function joinNetwork(){
     }
 }
 
-function addChat(){
-    const name = prompt('Введите название чата');
-    if (name) {
-      document.getElementById("some_menu").innerHTML +=  '<div class="menu-container" >' + `${name}` +  '</div>'
-    }
+function createChat(){
+    fetch(`http://localhost:${location.port}/ui/get_available_users`)
+        .then((response) => {
+            return response.json()
+        })
+        .then((data) => {
+            // window.location.replace('/ui/choose_user')
+            console.log(data)
+        })
 }
