@@ -116,8 +116,8 @@ class AccordBP:
             return render_template("choose_user.html")
 
         @self.accord.get('/check_for_new_chats')
-        def check_for_new_messages():
-            chats = self.storage.get_all_chats
+        def check_for_new_chats():
+            chats = list(self.storage.get_all_chats())
             if chats is None:
                 pass
             return jsonify(chats)
