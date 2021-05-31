@@ -28,6 +28,7 @@ class AccordBP:
             """
             chat_id = request.args.get('chat_id', type=int)
             data = request.args.get('data', type=str)
+
             message = Message.deserialize(data)
             chat = self.storage.get_chat_by_id(chat_id)
             chat.add_message(message)
@@ -35,9 +36,17 @@ class AccordBP:
         @self.accord.post('/ui/write_message')
         def ui_write_message():
             """ This method sends a new message to a specified chat on another node.
-            It receives 2 parameters chat_id, data
+            It receives 3 parameters chat_id, data, timestamp, port
             """
-            pass
+            data = request.args.get('data', type=str)
+            port = request.args.get('port', type=int)
+            chat_id = request.args.get('chat_id', type=int)
+            timestamp = request.args.get('timestamp', type=int)
+
+            chat = self.storage.get_chat_by_id(chat_id)
+            msg = Message(self.user, data, timestamp)
+            chat.add_message(msg)
+            # TODO send request to localhost:port/node/write_message
 
         @self.accord.get('/new_chat')
         def ui_create_new_1v1_chat():
