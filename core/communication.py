@@ -22,7 +22,7 @@ class AccordBP:
             """
             return jsonify(self.dht)
 
-        @self.accord.post('/node/write_message')
+        @self.accord.get('/node/write_message')
         def node_write_message():
             """ This method receives a new message to a specified chat.
             It receives 2 parameters chat_id, data
@@ -38,7 +38,7 @@ class AccordBP:
                 self.storage.add_chat(chat)
             chat.add_message(message)
 
-        @self.accord.post('/ui/write_message')
+        @self.accord.get('/ui/write_message')
         def ui_write_message():
             """ This method sends a new message to a specified chat on another node.
             It receives 3 parameters chat_id, data, timestamp, port
@@ -52,8 +52,8 @@ class AccordBP:
             msg = Message(self.user, data, timestamp)
             chat.add_message(msg)
             # TODO correctly process bad request
-            requests.post(url=f'http://localhost:{port}/node/write_message',
-                          params={'chat_id': chat_id, 'data': json.loads(msg.serialize())})  # !!! serialize
+            requests.get(url=f'http://localhost:{port}/node/write_message',
+                         params={'chat_id': chat_id, 'data': json.loads(msg.serialize())})  # !!! serialize
 
         @self.accord.get('/ui/get_available_users')
         def ui_get_available_users():
