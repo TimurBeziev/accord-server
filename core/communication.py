@@ -29,16 +29,31 @@ class AccordBP:
             """
             chat_id = request.args.get('chat_id', type=int)
             data = request.args.get('data', type=str)
+
             message = Message.deserialize(data)
             chat = self.storage.get_chat_by_id(chat_id)
+            if chat is None:
+                # User should be in DHT
+                chat = Chat(chat_id, message.user.name, message.user)
+                self.storage.add_chat(chat)
             chat.add_message(message)
 
         @self.accord.post('/ui/write_message')
         def ui_write_message():
             """ This method sends a new message to a specified chat on another node.
-            It receives 2 parameters chat_id, data
+            It receives 3 parameters chat_id, data, timestamp, port
             """
-            pass
+            data = request.args.get('data', type=str)
+            port = request.args.get('port', type=int)
+            chat_id = request.args.get('chat_id', type=int)
+            timestamp = request.args.get('timestamp', type=int)
+
+            chat = self.storage.get_chat_by_id(chat_id)
+            msg = Message(self.user, data, timestamp)
+            chat.add_message(msg)
+            # TODO correctly process bad request
+            requests.post(url=f'http://localhost:{port}/node/write_message',
+                          params={'chat_id': chat_id, 'data': json.loads(msg.serialize())})  # !!! serialize
 
         @self.accord.get('/ui/get_available_users')
         def ui_get_available_users():
