@@ -52,11 +52,11 @@ class AccordBP:
         @self.accord.post('/ui/get_available_users')
         def ui_get_available_users():
             # returns dict (user_id, user)
-            dht_users = self.dht.get_all_users_dict
+            dht_users = self.dht.get_all_users()
             existing_users = []
 
             storage_chats: List[Chat] = storage.get_all_chats()
-            for chat in range(len(storage_chats)):
+            for chat in storage_chats:
                 existing_users.append(storage_chats[chat].get_user())
             return dht_users - existing_users
 
