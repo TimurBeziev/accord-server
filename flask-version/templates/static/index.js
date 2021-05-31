@@ -23,9 +23,3 @@ function updateChats() {
 function createChat() {
     window.location.replace('/ui/choose_user')
 }
-
-async function createChatWithUser(user_id) {
-    // let user_id = object.getAttribute('id')
-    let chat_id = BigInt(Math.floor(Math.random() * 1125899906842624)) // from 0 to 2**50
-    await fetch(`http://localhost:${location.port}/ui/create_chat_with_user?user_id=${user_id}&chat_id=${chat_id}`)
-}

@@ -12,22 +12,17 @@
         .then((data) => {
             console.log(data)
             for (var i = 0; i < data.length; ++i) {
-                {#TODO make it work#}
-                var element = document.createElement("div")
-                element.innerHTML = data[i].name
-                element.onclick = returnSelectedUser
-                element.setAttribute("class", "menu-container")
-                element.setAttribute("id", data[i].id)
-                element.setAttribute("name", data[i].name)
-                console.log(element.toString())
-                document.getElementById("array_users").innerHTML += element.toString()
+                document.getElementById("array_users").innerHTML +=
+                    `<div class="menu-container" onclick=returnSelectedUser(this) id=${data[i].id} name=${data[i].name}> ${data[i].name} </div>`
             }
         })
 
     function returnSelectedUser(object) {
-        console.log(object.getAttributeNames())
+        let user_id = BigInt(object.getAttribute("id"))
+        let chat_id = BigInt(Math.floor(Math.random() * 1125899906842624)) // from 0 to 2**50
+        fetch(`http://localhost:${location.port}/ui/create_chat_with_user?user_id=${user_id}&chat_id=${chat_id}`)
+        window.location.replace('/')
     }
-
 </script>
 
 {% endblock %}
