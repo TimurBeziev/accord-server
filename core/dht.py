@@ -8,9 +8,12 @@ class DHT:
 
     def add_user(self, user):
         if user.id in self.table:
-            # raise Exception("user already exists in table")
             return
         self.table[user.id] = user
+
+    def add_users(self, users):
+        for user in users:
+            self.add_user(user)
 
     def remove_user(self, user_id):
         if user_id in self.table:
@@ -25,6 +28,9 @@ class DHT:
     def get_all_users(self):
         return self.table.values()
 
+    @staticmethod
+    def deserialize(data):
+        pass
 
     def serialize(self):
         return json.dumps([user.serialize() for user in self.table.values()])

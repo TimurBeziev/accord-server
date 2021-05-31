@@ -9,14 +9,18 @@ function get(){
     }
 }
 
-function connect(){
-  const port = prompt('Connect');
-  fetch('http://127.0.0.1:5000/connect')
+async function joinNetwork(){
+    const port = prompt('Введите порт');
+    console.log(`Got port ${port}`);
+    console.log(`Out port ${location.port}`);
+    if (port) {
+        await fetch(`http://localhost:${location.port}/ui/join_network?port=${port}`)
+    }
 }
 
 function addChat(){
-const name = prompt('Chat');
-if (name) {
-  document.getElementById("some_menu").innerHTML +=  '<div class="menu-container" >' + `${name}` +  '</div>'
-}
+    const name = prompt('Введите название чата');
+    if (name) {
+      document.getElementById("some_menu").innerHTML +=  '<div class="menu-container" >' + `${name}` +  '</div>'
+    }
 }

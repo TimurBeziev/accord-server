@@ -2,7 +2,7 @@ import json
 from typing import List
 
 import requests
-from flask import Blueprint, request, make_response, render_template, redirect
+from flask import Blueprint, request, make_response, render_template, redirect, Response
 from flask.json import jsonify
 from core.dht import DHT
 from core.user import User
@@ -19,8 +19,38 @@ class AccordBP:
         @self.accord.get('/node/join_network')
         def node_join_network():
             """ This method returns DHT of the node in JSON format.
+            Receives new user to add to dht
             """
+            user = User.deserialize(request.args.get('user', type=str))
+            self.dht.add_user(user)
             return jsonify(self.dht)
+
+        @self.accord.get('/ui/join_network')
+        def ui_join_network():
+            """This method receives port of node to connect to
+            """
+            port = request.args.get('port', type=int)
+            # TODO correctly process bad request
+            r = requests.get(url=f'http://localhost:{port}/node/join_network',
+                             params={'user': json.dumps(self.user.serialize())})
+            users = [User.load_from_dict(user) for user in json.loads(r.json())]
+            self.dht.add_users(users)
+            for user in users:
+                if user.id != self.user.id:
+                    r = requests.get(url=f'http://localhost:{user.port}/node/connect_to_user',
+                                     params={'user': json.dumps(self.user.serialize())})
+            # TODO use flask.make_response()
+            return "ok"
+
+        @self.accord.get('/node/connect_to_user')
+        def node_connect_to_user():
+            """This method adds to dht user that requests the connection
+            It receives user as param that needs to connect
+            """
+            user = User.deserialize(request.args.get('user', type=str))
+            self.dht.add_user(user)
+            # TODO use flask.make_response()
+            return "ok"
 
         @self.accord.get('/node/write_message')
         def node_write_message():
