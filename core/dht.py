@@ -20,6 +20,9 @@ class DHT:
         return self.table[user_id]
 
     def get_all_users_dict(self):
+        return self.table
+
+    def get_all_users(self):
         return self.table.values()
 
     def serialize(self):
