@@ -64,6 +64,8 @@ class Storage:
         return self.chats[chat_id]
 
     def get_chat_messages(self, chat: Chat):
+        if chat is None:
+            return None
         return chat.get_messages()
 
     def get_chat_port(self):

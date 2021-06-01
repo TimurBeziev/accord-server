@@ -124,6 +124,17 @@ class AccordBP:
                 pass
             return jsonify(chats)
 
+        @self.accord.get('/ui/check_for_new_messages')
+        def ui_check_for_new_messages():
+            """
+            find new messages in selected chat
+            """
+            chat_id = request.args.get('chat_id', type=int)
+            messages = self.storage.get_chat_messages(self.storage.get_chat_by_id(chat_id))
+            if messages is None:
+                pass
+            return jsonify(messages)
+
         @self.accord.route('/', methods=('GET', 'POST'))
         def home():
             data = ""
