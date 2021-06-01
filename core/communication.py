@@ -115,8 +115,8 @@ class AccordBP:
         def ui_choose_user():
             return render_template("choose_user.html")
 
-        @self.accord.get('/check_for_new_chats')
-        def check_for_new_chats():
+        @self.accord.get('/ui/check_for_new_chats')
+        def ui_check_for_new_chats():
             chats = list(self.storage.get_all_chats())
             if chats is None:
                 pass

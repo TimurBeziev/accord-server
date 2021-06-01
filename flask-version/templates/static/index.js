@@ -16,10 +16,6 @@ async function joinNetwork() {
     }
 }
 
-function updateChats() {
-    fetch(`http://localhost:${location.port}/check_for_new_chats`)
-}
-
 function createChat() {
     window.location.replace('/ui/choose_user')
 }
