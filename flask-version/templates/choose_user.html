@@ -11,11 +11,17 @@
         })
         .then((data) => {
             console.log(data)
+            document.getElementById("array_users").innerHTML +=
+                    `<div class="menu-container" onclick=ret()> Go back </div>`
             for (var i = 0; i < data.length; ++i) {
                 document.getElementById("array_users").innerHTML +=
                     `<div class="menu-container" onclick=returnSelectedUser(this) id=${data[i].id} name=${data[i].name}> ${data[i].name} </div>`
             }
         })
+
+    function ret() {
+        window.location.replace('/')
+    }
 
     function returnSelectedUser(object) {
         let user_id = BigInt(object.getAttribute("id"))

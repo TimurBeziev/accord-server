@@ -59,10 +59,9 @@ class Storage:
         return self.chats.values()
 
     def get_chat_by_id(self, chat_id):
-        for chat in self.chats:
-            if chat.id is chat_id:
-                return chat
-        return None
+        if chat_id not in self.chats.keys():
+            return None
+        return self.chats[chat_id]
 
     def get_chat_messages(self, chat: Chat):
         return chat.get_messages()

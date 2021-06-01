@@ -67,6 +67,7 @@ class AccordBP:
                 chat = Chat(chat_id, message.user.name, message.user)
                 self.storage.add_chat(chat)
             chat.add_message(message)
+            return "ok"
 
         @self.accord.get('/ui/write_message')
         def ui_write_message():
@@ -83,7 +84,8 @@ class AccordBP:
             chat.add_message(msg)
             # TODO correctly process bad request
             requests.get(url=f'http://localhost:{port}/node/write_message',
-                         params={'chat_id': chat_id, 'data': json.loads(msg.serialize())})
+                         params={'chat_id': chat_id, 'data': json.dumps(msg.serialize())})
+            return "ok"
 
         @self.accord.get('/ui/create_chat_with_user')
         def ui_create_chat_with_user():
